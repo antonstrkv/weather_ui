@@ -19,7 +19,7 @@ export const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', '
 
 export const SERVER = {
 	ICON: 'https://openweathermap.org/img/w/',
-	URL: 'http://api.openweathermap.org/data/2.5/weather',
+	URL: 'https://api.openweathermap.org/data/2.5/weather',
 	URL_HOURLY: 'https://api.openweathermap.org/data/2.5/forecast',
 	API_KEY: '1041b355b3b6422eb66d9f5e517f7b52',
 }
