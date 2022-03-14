@@ -316,7 +316,7 @@ body {
 }
 
 .city-list__item:hover .city-list__close-btn {
-	background: url("IMG/close-icon.svg");
+	background: url("./img/close-icon.svg");
 	background-repeat: no-repeat;
 	background-position: center;
 	margin-top: 2px;
