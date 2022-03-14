@@ -1,4 +1,4 @@
-import { UI_ELEMENTS, MONTHS, SERVER } from "./view.mjs"
+import { UI_ELEMENTS, MONTHS, SERVER } from "./view.js"
 
 
 UI_ELEMENTS.FORM_SEARCH.addEventListener('submit', () => {
