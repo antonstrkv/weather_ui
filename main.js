@@ -1,5 +1,9 @@
+import { saveStorageCurrentCity, saveStorageFavoriteCities, showStorage } from "./storage.js";
 import { UI_ELEMENTS, MONTHS, SERVER } from "./view.js"
 
+//localStorage.clear()
+
+showStorage();
 
 UI_ELEMENTS.FORM_SEARCH.addEventListener('submit', () => {
 	getWeather(getCity());
@@ -14,7 +18,8 @@ UI_ELEMENTS.HEART_BTN.addEventListener('click', () => {
 		removeSavedCityByHeart();
 	} else {
 		UI_ELEMENTS.HEART_BTN.classList.add('weather-now__btn--active')
-		addSavedCity();
+		addSavedCity(UI_ELEMENTS.WEATHER_TITLE_NOW.textContent);
+		saveStorageFavoriteCities();
 	}
 })
 
@@ -32,15 +37,16 @@ for (let tabBtn of UI_ELEMENTS.TABS_BUTTONS) {
 }
 
 
-function getWeather(inputValue) {
-	loadJson(inputValue, SERVER.URL)
-		.then(showInfo);
+export async function getWeather(inputValue) {
+	let json = await loadJson(inputValue, SERVER.URL)
+		showInfo(json);
 
-	loadJsonForecast(inputValue, SERVER.URL_HOURLY)
-		.then(showInfoForecast);
+	let jsonForecast = await loadJsonForecast(inputValue, SERVER.URL_HOURLY)
+		showInfoForecast(jsonForecast);
 
 	UI_ELEMENTS.INPUT_SEARCH.value = '';
 }
+
 
 
 function getCity() {
@@ -89,6 +95,7 @@ function showInfo(json) {
 	UI_ELEMENTS.DETAILS_ITEMS[4].textContent = `Sunset: ${(new Date(json.sys.sunset * 1000)).toLocaleTimeString().substring(0, 5)}`;
 
 	UI_ELEMENTS.FORECAST_TITLE.textContent = json.name;
+	saveStorageCurrentCity(json.name)
 	checkSavedStatus();
 	showHeart();
 }
@@ -152,8 +159,8 @@ function addDeleteCityListeners() {
 }
 
 
-function addSavedCity() {
-	let cityElement = createElementAddedLocation(UI_ELEMENTS.WEATHER_TITLE_NOW.textContent)
+export function addSavedCity(cityName) {
+	let cityElement = createElementAddedLocation(cityName)
 	UI_ELEMENTS.CITY_LIST.append(cityElement);
 	addCityListeners();
 	addDeleteCityListeners();
@@ -162,6 +169,7 @@ function addSavedCity() {
 
 function removeSavedCity(element) {
 	element.parentElement.remove();
+	saveStorageFavoriteCities();
 }
 
 
@@ -233,7 +241,7 @@ function dateConverter(unix) {
 		day = 0 + day;
 	}
 
-	return `${ day } ${ month }`;
+	return `${day} ${month}`;
 }
 
 
@@ -249,5 +257,7 @@ function timeConverter(unix) {
 		minute = 0 + minute;
 	}
 
-	return `${ hour }: ${ minute }`;
+	return `${hour}: ${minute}`;
 }
+
+
