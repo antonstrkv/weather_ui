@@ -1,9 +1,6 @@
-import { saveStorageCurrentCity, saveStorageFavoriteCities, showStorage } from "./storage.js";
+import { saveStorageCurrentCity, saveStorageFavoriteCities } from "./storage.js";
 import { UI_ELEMENTS, MONTHS, SERVER } from "./view.js"
 
-//localStorage.clear()
-
-showStorage();
 
 UI_ELEMENTS.FORM_SEARCH.addEventListener('submit', () => {
 	getWeather(getCity());
@@ -153,7 +150,7 @@ function addDeleteCityListeners() {
 	deleteButtons.forEach(item => {
 		item.addEventListener('click', () => {
 			removeSavedCity(item);
-			UI_ELEMENTS.HEART_BTN.classList.remove('weather-now__btn--active')
+			checkSavedStatus();
 		})
 	})
 }

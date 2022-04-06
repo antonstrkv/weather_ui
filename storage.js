@@ -1,15 +1,18 @@
 import { addSavedCity, getWeather } from "./main.js";
 
+//localStorage.clear()
 
-export function showStorage(){
-if (localStorage.getItem('currentCity')) {
-	let savedStorageCities = JSON.parse(localStorage.getItem('favoriteCities'));
+showStorage();
 
-	savedStorageCities.forEach(item => {
-		addSavedCity(item)
-	})
-	getWeather(localStorage.getItem('currentCity'));
-}
+function showStorage() {
+	if (localStorage.getItem('currentCity')) {
+		let savedStorageCities = JSON.parse(localStorage.getItem('favoriteCities'));
+
+		savedStorageCities.forEach(item => {
+			addSavedCity(item)
+		})
+		getWeather(localStorage.getItem('currentCity'));
+	}
 }
 
 export function saveStorageCurrentCity(Name) {
@@ -21,13 +24,11 @@ export function saveStorageFavoriteCities() {
 	let favoriteCities = [];
 
 	const savedElements = document.querySelectorAll('.main__btn');
-	
+
 	savedElements.forEach(item => {
-favoriteCities.push(item.textContent);
+		favoriteCities.push(item.textContent);
 	})
 
 	favoriteCities = JSON.stringify(favoriteCities);
-
 	localStorage.setItem('favoriteCities', favoriteCities);
-
 }
