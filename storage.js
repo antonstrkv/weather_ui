@@ -5,7 +5,7 @@ import { addSavedCity, getWeather } from "./main.js";
 showStorage();
 
 function showStorage() {
-		let savedStorageCities = JSON.parse(localStorage.getItem('favoriteCities'));
+		let savedStorageCities = JSON.parse(localStorage.getItem('favoriteCities')) ?? [];
 
 		savedStorageCities.forEach(item => {
 			addSavedCity(item)
